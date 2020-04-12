@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "348514769371",
+    "firebase_url": "https://pro-tech-ph.firebaseio.com",
+    "project_id": "pro-tech-ph",
+    "storage_bucket": "pro-tech-ph.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348514769371:android:5ac2e949850c979ba1affe",
+        "android_client_info": {
+          "package_name": "com.protechph"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "348514769371-uk2chm6s4o2ot0th8fq52du3hmcr3i5m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtvbt6s3BacBjwZ-aTgS-6nlmReQrgxOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "348514769371-uk2chm6s4o2ot0th8fq52du3hmcr3i5m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "348514769371-jqrio0npjcitskgdjotgi8al5hqss2d4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.prosperomobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
