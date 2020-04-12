@@ -8,7 +8,7 @@
 
 import React, { Component } from 'react';
 import { Platform } from 'react-native';
-import RootNavigation from './src/navigation/root-navigation';
+import RootNavigation from './navigation/root-navigation';
 
 // TODO(you): import any additional firebase services that you require for your app, e.g for auth:
 //    1) install the npm package: `yarn add @react-native-firebase/auth@alpha` - you do not need to

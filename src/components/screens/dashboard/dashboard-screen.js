@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, ActivityIndicator, ImageBackground, Dimensions } from 'react-native';
+import { Platform, StyleSheet, Text, View, ActivityIndicator, ImageBackground, Dimensions, ScrollView } from 'react-native';
 import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph } from 'react-native-chart-kit';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -227,111 +227,121 @@ class DashboardScreen extends Component {
     };
 
     return (
-      <View style={styles.container}>
-        {!this.state.loading && (
-          <View style={styles.stats}>
-            <View>
-              <View style={styles.groupedBox}>
-                <View style={styles.groupedBoxSub}>
-                  <Text style={styles.label}>infected</Text>
-                  <Text style={{ ...styles.value, color: '#F3C028' }}>
-                    {this.numberFormat(this.state.infected, 0, 'en-US', 'compact', 2)}
-                  </Text>
-                  <Text style={styles.label}>{this.state.infected}</Text>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.container}>
+          {!this.state.loading && (
+            <View style={styles.stats}>
+              <View>
+                <View style={styles.groupedBox}>
+                  <View style={styles.groupedBoxSub}>
+                    <Text style={styles.label}>infected</Text>
+                    <Text style={{ ...styles.value, color: '#F3C028' }}>
+                      {this.numberFormat(this.state.infected, 0, 'en-US', 'compact', 2)}
+                    </Text>
+                    <Text style={styles.label}>{this.state.infected}</Text>
+                  </View>
+                  <View style={styles.groupedBoxSub}>
+                    <Text style={styles.label}>recovered</Text>
+                    <Text style={{ ...styles.value, color: '#70C1B3' }}>
+                      {this.numberFormat(this.state.recovered, 0, 'en-US', 'compact', 2)}
+                    </Text>
+                    <Text style={styles.label}>{this.state.recovered}</Text>
+                  </View>
+                  <View style={styles.groupedBoxSub}>
+                    <Text style={styles.label}>deceased</Text>
+                    <Text style={{ ...styles.value, color: '#F25F5C' }}>
+                      {this.numberFormat(this.state.deceased, 0, 'en-US', 'compact', 2)}
+                    </Text>
+                    <Text style={styles.label}>{this.state.deceased}</Text>
+                  </View>
+                  <View style={styles.groupedBoxSub}>
+                    <Text style={styles.label}>active</Text>
+                    <Text style={{ ...styles.value, color: '#247BA0' }}>
+                      {this.numberFormat(this.state.active, 0, 'en-US', 'compact', 2)}
+                    </Text>
+                    <Text style={styles.label}>{this.state.active}</Text>
+                  </View>
                 </View>
-                <View style={styles.groupedBoxSub}>
-                  <Text style={styles.label}>recovered</Text>
-                  <Text style={{ ...styles.value, color: '#70C1B3' }}>
-                    {this.numberFormat(this.state.recovered, 0, 'en-US', 'compact', 2)}
+                <View style={{ height: '87%' }}>
+                  <Text style={styles.lastUpdatedAtApify}>
+                    {moment(this.state.lastUpdated).format('MMMM Do YYYY, h:mm:ss a')}
                   </Text>
-                  <Text style={styles.label}>{this.state.recovered}</Text>
-                </View>
-                <View style={styles.groupedBoxSub}>
-                  <Text style={styles.label}>deceased</Text>
-                  <Text style={{ ...styles.value, color: '#F25F5C' }}>
-                    {this.numberFormat(this.state.deceased, 0, 'en-US', 'compact', 2)}
+                  <Text style={styles.topicLabel}>
+                    &#9679; Covid19 Stats
                   </Text>
-                  <Text style={styles.label}>{this.state.deceased}</Text>
-                </View>
-                <View style={styles.groupedBoxSub}>
-                  <Text style={styles.label}>active</Text>
-                  <Text style={{ ...styles.value, color: '#247BA0' }}>
-                    {this.numberFormat(this.state.active, 0, 'en-US', 'compact', 2)}
+                  <LineChart
+                    data={data}
+                    width={this.state.screenWidth}
+                    height={200}
+                    chartConfig={this.state.chartConfig}
+                    withShadow={false}
+                    withDots={false}
+                    withInnerLines={false}
+                    withOuterLines={false}
+                    withVerticalLabels={false}
+                    formatXLabel={(value) => moment(value).format('D')}
+                    bezier
+                    style={{
+                      margin: 5,
+                      borderRadius: 5,
+                      backgroundColor: '#000000',
+                    }}
+                  />
+                  <Text style={styles.topicLabel}>
+                    <Text style={{ ...styles.topicLabel, color: '#F3C028', fontSize: 15 }}>&#9679;</Text> Infection Per Day <Text style={styles.topicLabelSub}>(surge pick {highestInfectionPerDay})</Text>
                   </Text>
-                  <Text style={styles.label}>{this.state.active}</Text>
+                  <ContributionGraph
+                    values={infectionPerDay}
+                    endDate={new Date()}
+                    numDays={100}
+                    width={this.state.screenWidth}
+                    height={200}
+                    chartConfig={this.state.chartConfig}
+                    horizontal={true}
+                    squareSize={15}
+                    style={{
+                      margin: 5,
+                      borderRadius: 5,
+                      backgroundColor: '#000000',
+                    }}
+                  />
+                  <Text style={styles.topicLabel}>
+                    <Text style={{ ...styles.topicLabel, color: '#F25F5C', fontSize: 15 }}>&#9679;</Text> Death Per Day <Text style={styles.topicLabelSub}>(surge pick {highestDeathPerDay})</Text>
+                  </Text>
+                  <ContributionGraph
+                    values={deathPerDay}
+                    endDate={new Date()}
+                    numDays={100}
+                    width={this.state.screenWidth}
+                    height={200}
+                    chartConfig={this.state.chartConfig}
+                    horizontal={true}
+                    squareSize={15}
+                    style={{
+                      margin: 5,
+                      borderRadius: 5,
+                      backgroundColor: '#000000',
+                    }}
+                  />
                 </View>
-              </View>
-              <View style={{ height: '87%' }}>
-                <Text style={styles.lastUpdatedAtApify}>
-                  {moment(this.state.lastUpdated).format('MMMM Do YYYY, h:mm:ss a')}
-                </Text>
-                <Text style={styles.topicLabel}>
-                  &#9679; Covid19 Stats
-                </Text>
-                <LineChart
-                  data={data}
-                  width={this.state.screenWidth}
-                  height={this.state.screenHeight * 0.21}
-                  chartConfig={this.state.chartConfig}
-                  withShadow={false}
-                  withDots={false}
-                  withInnerLines={false}
-                  withOuterLines={false}
-                  withVerticalLabels={false}
-                  formatXLabel={(value) => moment(value).format('D')}
-                  bezier
-                  style={{
-                    margin: 5,
-                    borderRadius: 5,
-                    backgroundColor: '#000000',
-                  }}
-                />
-                <Text style={styles.topicLabel}>
-                  <Text style={{ ...styles.topicLabel, color: '#F3C028', fontSize: 15 }}>&#9679;</Text> Infection Per Day <Text style={styles.topicLabelSub}>(surge pick {highestInfectionPerDay})</Text>
-                </Text>
-                <ContributionGraph
-                  values={infectionPerDay}
-                  endDate={new Date()}
-                  numDays={100}
-                  width={this.state.screenWidth}
-                  height={this.state.screenHeight * 0.23}
-                  chartConfig={this.state.chartConfig}
-                  horizontal={true}
-                  squareSize={15}
-                  style={{
-                    margin: 5,
-                    borderRadius: 5,
-                    backgroundColor: '#000000',
-                  }}
-                />
-                <Text style={styles.topicLabel}>
-                  <Text style={{ ...styles.topicLabel, color: '#F25F5C', fontSize: 15 }}>&#9679;</Text> Death Per Day <Text style={styles.topicLabelSub}>(surge pick {highestDeathPerDay})</Text>
-                </Text>
-                <ContributionGraph
-                  values={deathPerDay}
-                  endDate={new Date()}
-                  numDays={100}
-                  width={this.state.screenWidth}
-                  height={this.state.screenHeight * 0.23}
-                  chartConfig={this.state.chartConfig}
-                  horizontal={true}
-                  squareSize={15}
-                  style={{
-                    margin: 5,
-                    borderRadius: 5,
-                    backgroundColor: '#000000',
-                  }}
-                />
               </View>
             </View>
-          </View>
-        )}
-        {this.state.loading && <ActivityIndicator color="#F0F0F2" size="large" />}
-        <ImageBackground
-          style={styles.backgroundImage}
-          source={require('../../../../assets/wave.png')}
-        />
-      </View>
+          )}
+          {this.state.loading && (
+            <View
+              style={{
+                width: this.state.screenWidth,
+                height: this.state.screenHeight,
+                justifyContent: 'center',
+                textAlign: 'center',
+                backgroundColor: '#0A0B0D',
+              }}>
+              <ActivityIndicator color="#F0F0F2" size="large" />
+            </View>
+          )}
+          <ImageBackground style={styles.backgroundImage} source={require('../../../../assets/wave.png')} />
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -351,6 +361,7 @@ const styles = StyleSheet.create({
   },
   groupedBoxSub: {
     padding: '0.5%',
+    paddingTop: 10,
     margin: '0.5%',
     width: '24%',
     borderRadius: 5,
@@ -414,5 +425,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#0A0B0D',
+    minHeight: '100%',
   },
+  scrollView: {
+    flex: 1,
+    backgroundColor: '#0A0B0D',
+    minHeight: '100%',
+  }
 });
